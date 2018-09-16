@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import uuid from 'uuid';
 
 class AddProject extends Component {
     constructor() {
@@ -16,21 +17,22 @@ class AddProject extends Component {
         if (this.refs.title.value === '') {
             alert('Title is required');
         } else {
-            this.setState({newProject:{
-                title: this.refs.title.value,
-                category: this.refs.category.value
+            this.setState({
+                newProject: {
+                    id: uuid.v4(),
+                    title: this.refs.title.value,
+                    category: this.refs.category.value
             }}, function(){ // 2nd parameter Call back function
                 // console.log(this.state);
-                this.props.AddProject(newProject);
+                this.props.AddProject(this.state.newProject);
             });
         }
         e.preventDefault();
     }
-
     
     render() {
         let categoryOptions = this.program.categories.map(category => {
-            return <option key={category} value="category">{category}</ option> 
+            return <option key={category} value={category}>{category}</ option> 
         });
         return (
             <div>
@@ -46,10 +48,16 @@ class AddProject extends Component {
                             {categoryOptions}
                     </div>
                     <input type="submit" value="Submit" />
+                    <br />
                 </form>
             </div>
         );
     }
+}
+
+AddProject.proptypes = {
+    categories: React.PropTypes.array,
+    addProject: React.PropTypes.func
 }
 
 export default AddProject;
