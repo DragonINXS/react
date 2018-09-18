@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 
 class ProjectItem extends Component {
 
+    // need to finish this up 
     deleteProject(id) {
         this.props.onDelete(id);
     }
